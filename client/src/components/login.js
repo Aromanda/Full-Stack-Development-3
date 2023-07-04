@@ -9,8 +9,8 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const [showAlert, setShowAlert] = useState(false);
-  const [showToast, setShowToast] = useState(false);
+  const [showAlertError, setShowAlertError] = useState(false);
+  const [showAlertSuccess, setShowAlertSuccess] = useState(false);
   const navigate = useNavigate();
 
   // These methods will update the state properties.
@@ -19,11 +19,7 @@ export default function Login() {
       return { ...prev, ...value };
     });
   }
- const handleNavigation = () => {
-  setShowAlert(true);
-  console.log(showAlert);
-  setTimeout(() => setShowAlert(false), 5000);
- }
+
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
@@ -38,22 +34,18 @@ export default function Login() {
         body: JSON.stringify(form),
       });
       if (response.status === 404) {
-        navigate("/error");
+        setShowAlertError(true);
+        setTimeout(() => { navigate("/error")}, 5000);
       } else if (response.status === 204) {
         setForm({ email: "", password: "" });
-        // await handleNavigation();
-        // setTimeout(() => { setShowAlert(false)}, 20000);
-        await setTimeout(() => { console.log("Hello")}, 20000);
-        navigate("/recordList");
-      } else if (response.ok) {
-        //   const data = await response.json();
+        setShowAlertSuccess(true);
+        setTimeout(() => { navigate("/recordList")}, 5000);
       } else {
         throw new Error("Request failed with status: " + response.status);
       }
     } catch (error) {
-      setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 5000); // Show the alert for 5 seconds
-      window.alert(error.message);
+      setShowAlertError(true);
+      setTimeout(() => {window.alert(error.message);}, 5000); // Show the alert for 5 seconds
     }
   }
 
@@ -109,20 +101,17 @@ export default function Login() {
         </div>
       </Form>
 
-      {showAlert && (
-        <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+      {showAlertError && (
+        <Alert variant="danger" onClose={() => setShowAlertError(false)} dismissible>
           Connexion échouée. Veuillez réessayer.
         </Alert>
       )}
 
-      <Toast show={showToast} onClose={() => setShowToast(false)} delay={5000} autohide>
-        <Toast.Header>
-          <strong className="me-auto">Notification</strong>
-        </Toast.Header>
-        <Toast.Body>
-          Confirmation de création, mise à jour ou suppression réussie.
-        </Toast.Body>
-      </Toast>
+      {showAlertSuccess && (
+        <Alert variant="success" onClose={() => setShowAlertSuccess(false)} dismissible>
+          Connexion acceptée.
+        </Alert>
+      )}
     </div>
   );
 }
