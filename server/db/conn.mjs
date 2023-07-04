@@ -11,6 +11,6 @@ try {
   console.error(e);
 }
 
-let db = conn.db("REACTstack");
+let db = conn.db("Full-Stack-Development-3");
 
 export default db;
