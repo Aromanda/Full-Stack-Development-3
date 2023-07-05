@@ -13,7 +13,7 @@ export default function Navbar() {
    <div>
      <nav className="navbar navbar-expand-lg navbar-light bg-light">
        <NavLink className="navbar-brand" to="/">
-       <img style={{"width" : 12 + '%'}} src="images/rocketLogo.png"></img>
+       <img style={{"width" : 12 + '%'}} src="images/rocketLogo.png" alt=""></img>
        </NavLink>
        <button
          className="navbar-toggler"
@@ -29,7 +29,7 @@ export default function Navbar() {
  
        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
-            {(location.pathname !== '/' && location.pathname !== '/error' && location.pathname !== '/admin' && location.pathname !== '/transaction') && 
+            {(location.pathname !== '/' && location.pathname !== '/error' && location.pathname !== '/admin' && location.pathname !== '/transaction' && location.pathname !== '/create' && location.pathname !== '/edit') && 
             (
               <li className="nav-item">
                 <NavLink className="nav-link" to="/create">
