@@ -29,7 +29,8 @@ export default function Navbar() {
  
        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
-            {(location.pathname !== '/' && location.pathname !== '/error') && (
+            {(location.pathname !== '/' && location.pathname !== '/error' && location.pathname !== '/admin') && 
+            (
               <li className="nav-item">
                 <NavLink className="nav-link" to="/create">
                   Create Agents
