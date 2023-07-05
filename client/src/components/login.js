@@ -39,7 +39,7 @@ export default function Login() {
       } else if (response.status === 204) {
         setForm({ email: "", password: "" });
         setShowAlertSuccess(true);
-        setTimeout(() => { navigate("/recordList")}, 4000);
+        setTimeout(() => { navigate("/admin")}, 4000);
       } else {
         throw new Error("Request failed with status: " + response.status);
       }
