@@ -104,25 +104,24 @@ export default function RecordList() {
         </table>
       </div>
 
-      
-      <Modal
-  isOpen={showConfirmationModal}
-  onRequestClose={closeConfirmationModal}
-  contentLabel="Confirmation Modal"
-  style={{
-    overlay: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-    content: {
-      width: "400px",
-      maxWidth: "90%",
-      margin: "0 auto",
-      marginBottom: "350px",
-    },
-  }}
->
-  <h2>Êtes-vous sûr de vouloir continuer ?</h2>
-  <div>
+   <Modal
+      isOpen={showConfirmationModal}
+      onRequestClose={closeConfirmationModal}
+      contentLabel="Confirmation Modal"
+      style={{
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        },
+        content: {
+          width: "400px",
+          maxWidth: "90%",
+          margin: "0 auto",
+          marginBottom: "350px",
+        },
+      }}
+    >
+      <h2>Êtes-vous sûr de vouloir continuer ?</h2>
+      <div>
     <button
       style={{
         marginRight: "10px",
@@ -153,8 +152,8 @@ export default function RecordList() {
     >
       Non/Retour
     </button>
-  </div>
-</Modal>
+    </div>
+  </Modal>
     </div>
   );
 }
