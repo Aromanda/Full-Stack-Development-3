@@ -10,6 +10,22 @@ import Edit from "./components/edit";
 import Create from "./components/create";
 import Login from "./components/login";
 import Error from "./components/error";
+import { AgentsListCard, TransactionsCard } from "./components/admin";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+function AdminPage() {
+  return (
+      <Row>
+        <Col>
+          <AgentsListCard />
+        </Col>
+        <Col>
+          <TransactionsCard />
+        </Col>
+      </Row>
+  );
+}
 
 const App = () => {
  return (
@@ -21,6 +37,7 @@ const App = () => {
        <Route path="/" element={<Login />} />
        <Route path="/create" element={<Create />} />
        <Route path="/error" element={<Error />} />
+       <Route path="/admin" element={<AdminPage />} />
      </Routes>
    </div>
  );
