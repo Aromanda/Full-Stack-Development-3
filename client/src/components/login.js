@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from "react-router-dom";
-import { Alert, Toast } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 
 export default function Login() {
   const [form, setForm] = useState({
@@ -35,17 +35,17 @@ export default function Login() {
       });
       if (response.status === 404) {
         setShowAlertError(true);
-        setTimeout(() => { navigate("/error")}, 5000);
+        setTimeout(() => { navigate("/error")}, 4000);
       } else if (response.status === 204) {
         setForm({ email: "", password: "" });
         setShowAlertSuccess(true);
-        setTimeout(() => { navigate("/recordList")}, 5000);
+        setTimeout(() => { navigate("/recordList")}, 4000);
       } else {
         throw new Error("Request failed with status: " + response.status);
       }
     } catch (error) {
       setShowAlertError(true);
-      setTimeout(() => {window.alert(error.message);}, 5000); // Show the alert for 5 seconds
+      setTimeout(() => {window.alert(error.message);}, 4000); // Show the alert for 5 seconds
     }
   }
 
