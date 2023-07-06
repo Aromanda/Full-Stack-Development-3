@@ -14,6 +14,7 @@ import BodyOnlyExample from "./components/transaction";
 import { AgentsListCard, TransactionsCard } from "./components/admin";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { getCookie } from "react-use-cookie";
 
 function AdminPage() {
   return (
@@ -29,6 +30,7 @@ function AdminPage() {
 }
 
 const App = () => {
+  const cookie = getCookie("sessionToken");
  return (
    <div>
      <Navbar />
