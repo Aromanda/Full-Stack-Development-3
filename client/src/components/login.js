@@ -51,6 +51,7 @@ export default function Login() {
 
       console.log(user._id);
       console.log("user._id");
+
       const session = await fetch(`http://localhost:5050/session/${user._id}`, {
         method: "POST",
         headers: {
@@ -58,6 +59,7 @@ export default function Login() {
         },
       });
       console.log(session);
+      
       const sessionResponse = await session.json()
       console.log("sessionResponse");
       console.log(sessionResponse);
