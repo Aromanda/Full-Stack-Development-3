@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from "react-router-dom";
 import { Alert } from 'react-bootstrap';
+import useCookie from 'react-use-cookie';
 
 export default function Login() {
   const [form, setForm] = useState({
@@ -12,6 +13,7 @@ export default function Login() {
   const [showAlertError, setShowAlertError] = useState(false);
   const [showAlertSuccess, setShowAlertSuccess] = useState(false);
   const navigate = useNavigate();
+  const [cookie, setCookie] = useCookie(['sessionToken']);
 
   // These methods will update the state properties.
   function updateForm(value) {
@@ -33,21 +35,43 @@ export default function Login() {
         },
         body: JSON.stringify(form),
       });
-      if (response.status === 404) {
-        setShowAlertError(true);
-        setTimeout(() => { navigate("/error")}, 4000);
-      } else if (response.status === 204) {
-        setForm({ email: "", password: "" });
-        setShowAlertSuccess(true);
-        setTimeout(() => { navigate("/admin")}, 4000);
-      } else {
-        throw new Error("Request failed with status: " + response.status);
-      }
-    } catch (error) {
+      const user = await response.json()
+      console.log("user");
+      console.log(user);
+      console.log("response.status");
+      console.log(response.status);
+
+    //verification si recu un user
+    if (response.status === 404) {
       setShowAlertError(true);
-      setTimeout(() => {window.alert(error.message);}, 4000); // Show the alert for 5 seconds
+      setTimeout(() => { navigate("/error")}, 4000);
+    } else if (response.status === 200) {
+      setForm({ email: "", password: "" });
+      setShowAlertSuccess(true);
+
+      console.log(user._id);
+      console.log("user._id");
+      const session = await fetch(`http://localhost:5050/session/${user._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(session);
+      const sessionResponse = await session.json()
+      console.log("sessionResponse");
+      console.log(sessionResponse);
+
+      setCookie(sessionResponse.data.token);
+      setTimeout(() => { navigate("/admin")}, 4000);
+    } else {
+      throw new Error("Request failed with status: " + response.status);
     }
+  } catch (error) {
+    setShowAlertError(true);
+    setTimeout(() => {window.alert(error.message);}, 4000); // Show the alert for 4 seconds
   }
+}
 
   // This following section will display the form that takes input from the user to update the data.
   return (
