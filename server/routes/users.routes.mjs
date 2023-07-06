@@ -23,17 +23,18 @@ router.get("/:id", async (req, res) => {
 
 // This section will help you create a new record.
 router.post("/", async (req, res) => {
-  let newDocument = {
-    email: req.body.email,
-    password: req.body.password,
-  };
+  let {email, password} = req.body
   let collection = await db.collection("users");
-  let result = await collection.findOne(newDocument);
+  let user = await collection.findOne({email: email});
 
-  if (!result) {
+  if (!user) {
     res.status(404).json("Not found");
   } else {
-    res.sendStatus(204);
+    const id = new ObjectId(user.id).toString();
+    console.log("ici");
+
+    // res.status(204).send({id: id, first_name: user.first_name, last_name: user.last_name, email: user.email});
+    res.json(user);
   }
 });
 
