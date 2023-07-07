@@ -30,9 +30,7 @@ export default function Navbar({fullname}) {
        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
           {fullname && (  // Add this condition to check if fullname exists
-              <li className="nav-item">
                 <span className="nav-link">Bonjour, {fullname}</span>
-              </li>
             )}
           </ul>
         </div>
