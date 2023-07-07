@@ -13,7 +13,7 @@ export default function Login() {
   const [showAlertError, setShowAlertError] = useState(false);
   const [showAlertSuccess, setShowAlertSuccess] = useState(false);
   const navigate = useNavigate();
-  const [cookie, setCookie] = useCookie(['sessionToken']);
+  const [cookie, setCookie] = useCookie('sessionToken');
 
   // These methods will update the state properties.
   function updateForm(value) {
@@ -35,45 +35,55 @@ export default function Login() {
         },
         body: JSON.stringify(form),
       });
-      const user = await response.json()
+      const user = await response.json();
       console.log("user");
       console.log(user);
       console.log("response.status");
       console.log(response.status);
 
-    //verification si recu un user
-    if (response.status === 404) {
+      // Vérification si un utilisateur a été reçu
+      if (response.status === 404) {
+        setShowAlertError(true);
+        setTimeout(() => {
+          navigate("/error");
+        }, 4000);
+      } else if (response.status === 200) {
+        setForm({ email: "", password: "" });
+        setShowAlertSuccess(true);
+
+        console.log(user._id);
+        console.log("user._id");
+
+        const sessionResponse = await fetch(`http://localhost:5050/session/${user._id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(sessionResponse);
+
+        const sessionData = await sessionResponse.json();
+        console.log("sessionData");
+        console.log(sessionData);
+
+        if (sessionResponse.ok) {
+          setCookie(sessionData.data.token);
+          setTimeout(() => {
+            navigate("/admin");
+          }, 4000);
+        } else {
+          // Gérez les erreurs ici
+        }
+      } else {
+        throw new Error("Request failed with status: " + response.status);
+      }
+    } catch (error) {
       setShowAlertError(true);
-      setTimeout(() => { navigate("/error")}, 4000);
-    } else if (response.status === 200) {
-      setForm({ email: "", password: "" });
-      setShowAlertSuccess(true);
-
-      console.log(user._id);
-      console.log("user._id");
-
-      const session = await fetch(`http://localhost:5050/session/${user._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(session);
-      
-      const sessionResponse = await session.json()
-      console.log("sessionResponse");
-      console.log(sessionResponse);
-
-      setCookie(sessionResponse.data.token);
-      setTimeout(() => { navigate("/admin")}, 4000);
-    } else {
-      throw new Error("Request failed with status: " + response.status);
+      setTimeout(() => {
+        window.alert(error.message);
+      }, 4000); // Show the alert for 4 seconds
     }
-  } catch (error) {
-    setShowAlertError(true);
-    setTimeout(() => {window.alert(error.message);}, 4000); // Show the alert for 4 seconds
   }
-}
 
   // This following section will display the form that takes input from the user to update the data.
   return (
