@@ -29,12 +29,9 @@ export default function Navbar({fullname}) {
  
        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
-            {(location.pathname !== '/' && location.pathname !== '/error' && location.pathname !== '/admin' && location.pathname !== '/transaction' && location.pathname !== '/create' && location.pathname !== '/edit') && 
-            (
+          {fullname && (  // Add this condition to check if fullname exists
               <li className="nav-item">
-                <NavLink className="nav-link" to="/create">
-                  Create Agents
-                </NavLink>
+                <span className="nav-link">Bonjour, {fullname}</span>
               </li>
             )}
           </ul>
