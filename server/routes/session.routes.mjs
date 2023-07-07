@@ -28,6 +28,67 @@ router.post("/:id", async (req, res) => {
         message:'session saved successfully'
     });
   });
+
+  router.get("/validate_token", async (req, res) => {
+    const token = req.query.token;
+  
+    // Vérifier si une session valide existe avec le token donné
+    try {
+      let collection = await db.collection("session");
+      const session = await collection.findOne({ session_token: token });
+  
+      if (session) {
+        // Session valide trouvée
+        collection = await db.collection("users");
+        const user = await collection.findOne({ _id: session.user });
+  
+        if (user) {
+          const { first_name, last_name, id } = user;
+          res.json({
+            status: "ok",
+            data: {
+              valid: true,
+              user: {
+                first_name,
+                last_name,
+                id
+              },
+              message: null
+            }
+          });
+        } else {
+          // Aucun utilisateur correspondant trouvé
+          res.json({
+            status: "ok",
+            data: {
+              valid: false,
+              user: null,
+              message: null
+            }
+          });
+        }
+      } else {
+        // Aucune session valide trouvée
+        res.json({
+          status: "ok",
+          data: {
+            valid: false,
+            user: null,
+            message: null
+          }
+        });
+      }
+    } catch (error) {
+      // Une erreur s'est produite lors de la recherche de la session
+      res.json({
+        status: "error",
+        data: null,
+        message: "Une erreur s'est produite lors de la validation du token."
+      });
+    }
+  });
+  
+  
   
 export default router;
 
