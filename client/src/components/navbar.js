@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { NavLink,useLocation } from "react-router-dom";
  
 // Here, we display our Navbar
-export default function Navbar() {
+export default function Navbar({fullname}) {
   const location = useLocation();
  return (
    <div>
