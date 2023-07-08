@@ -6,7 +6,7 @@ import Edit from "./components/edit";
 import Create from "./components/create";
 import Login from "./components/login";
 import Error from "./components/error";
-import BodyOnlyExample from "./components/transaction";
+// import Transactions from './routes/transactions.routes.mjs';
 import { AgentsListCard, TransactionsCard } from "./components/admin";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -66,7 +66,7 @@ const App = () => {
         <Route path="/create" element={<Create />} />
         <Route path="/error" element={<Error />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/transaction" element={<BodyOnlyExample />} />
+        {/* <Route path="/transaction" element={<Transaction />} /> */}
       </Routes>
     </div>
   );
