@@ -49,7 +49,7 @@ const App = () => {
         console.log(validateToken);
       } catch (error) {
         console.error("Une erreur s'est produite lors de la validation du token.");
-        navigate("/error");
+        navigate("/");
       }
     };
 
@@ -73,5 +73,4 @@ const App = () => {
 };
 
 export default App;
-
 
